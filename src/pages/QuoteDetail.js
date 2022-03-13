@@ -1,45 +1,58 @@
-import { Route, Link, Switch, useParams, useRouteMatch } from 'react-router-dom';
+import {
+  Route,
+  Link,
+  Switch,
+  useParams,
+  useRouteMatch,
+} from 'react-router-dom';
 
 import HighlightedQuote from '../components/quotes/HighlightedQuote';
 import Comments from '../components/comments/Comments';
-const DUMMY_QUOTES = [
-  {
-    id: 'q1',
-    author: 'Soumy',
-    text: 'Learning react is fun',
-  },
-  {
-    id: 'q2',
-    author: 'Soumy Sharma',
-    text: 'Learning react is great',
-  },
-];
+import useHttp from '../hooks/use-http';
+import { getSingleQuote } from '../lib/api';
+import { useEffect } from 'react';
+import LoadingSpinner from '../components/UI/LoadingSpinner';
+
 const QuoteDetail = () => {
   const params = useParams();
   const match = useRouteMatch();
-  console.log(match);
-  const quoteDetails = DUMMY_QUOTES.find(
-    (quote) => quote.id === params.quoteId
-  );
-  if (!quoteDetails) {
-    return;
+  const {
+    sendRequest,
+    status,
+    data: quoteDetails,
+    error,
+  } = useHttp(getSingleQuote, true);
+  
+  const {quoteId} = params;
+
+  useEffect(() => {
+    sendRequest(quoteId);
+  }, [sendRequest, quoteId]);
+
+  if(status === 'pending') {
+    return <div className='centered'><LoadingSpinner /></div>;
   }
+  if (!quoteDetails.text) {
+    return <p>No quote found!</p>;
+  }
+
+  if(error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <section>
       <HighlightedQuote text={quoteDetails.text} author={quoteDetails.author} />
       <Switch>
         <Route path={`${match.path}`} exact>
           <div className='centered'>
-            <Link
-              className='btn--flat'
-              to={`${match.url}/comments`}
-            >
+            <Link className='btn--flat' to={`${match.url}/comments`}>
               Load Comments
             </Link>
           </div>
         </Route>
         <Route path={`${match.path}/comments`}>
-          <Comments />
+          <Comments quoteId = {quoteId}/>
         </Route>
       </Switch>
     </section>
