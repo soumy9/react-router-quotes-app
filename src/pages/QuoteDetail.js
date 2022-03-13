@@ -1,4 +1,4 @@
-import { Route, useParams } from 'react-router-dom';
+import { Route, Link, Switch, useParams } from 'react-router-dom';
 
 import HighlightedQuote from '../components/quotes/HighlightedQuote';
 import Comments from '../components/comments/Comments';
@@ -24,10 +24,22 @@ const QuoteDetail = () => {
   }
   return (
     <section>
-      <HighlightedQuote text={quoteDetails.text} author = {quoteDetails.author} />
-      <Route path={`/quotes/${params.quoteId}/comments`}>
-        <Comments />
-      </Route>
+      <HighlightedQuote text={quoteDetails.text} author={quoteDetails.author} />
+      <Switch>
+        <Route path={`/quotes/${params.quoteId}`} exact>
+          <div className='centered'>
+            <Link
+              className='btn--flat'
+              to={`/quotes/${params.quoteId}/comments`}
+            >
+              Load Comments
+            </Link>
+          </div>
+        </Route>
+        <Route path={`/quotes/${params.quoteId}/comments`}>
+          <Comments />
+        </Route>
+      </Switch>
     </section>
   );
 };
