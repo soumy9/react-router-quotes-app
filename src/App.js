@@ -4,7 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import QuoteDetail from './pages/QuoteDetail';
 import AllQuotes from './pages/AllQuotes';
 import NewQuote from './pages/NewQuote';
-import Layout from './components/layout/Layout';
+import Layout from './templates/Layout';
 import NotFound from './pages/NotFound';
 
 function App() {

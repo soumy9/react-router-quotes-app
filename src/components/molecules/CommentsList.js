@@ -1,4 +1,4 @@
-import CommentItem from './CommentItem';
+import CommentItem from '../atoms/CommentItem';
 import classes from './CommentsList.module.css';
 
 const CommentsList = (props) => {

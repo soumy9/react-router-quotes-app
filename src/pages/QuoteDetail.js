@@ -6,12 +6,12 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import HighlightedQuote from '../components/quotes/HighlightedQuote';
-import Comments from '../components/comments/Comments';
+import HighlightedQuote from '../components/molecules/HighlightedQuote';
+import Comments from '../components/organisms/Comments';
 import useHttp from '../hooks/use-http';
 import { getSingleQuote } from '../lib/api';
 import { useEffect } from 'react';
-import LoadingSpinner from '../components/UI/LoadingSpinner';
+import LoadingSpinner from '../components/atoms/LoadingSpinner';
 
 const QuoteDetail = () => {
   const params = useParams();

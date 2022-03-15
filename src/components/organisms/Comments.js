@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import LoadingSpinner from '../UI/LoadingSpinner';
+import LoadingSpinner from '../atoms/LoadingSpinner';
 import classes from './Comments.module.css';
-import CommentsList from './CommentsList';
+import CommentsList from '../molecules/CommentsList';
 import NewCommentForm from './NewCommentForm';
 import useHttp from '../../hooks/use-http';
 import { getAllComments } from '../../lib/api';
